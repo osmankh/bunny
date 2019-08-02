@@ -66,8 +66,8 @@ while gameRunning:
     # 6.2 - Draw arrows
     for bullet in arrows:
         index = 0
-        velx = math.cos(bullet[0]) * 10
-        vely = math.sin(bullet[0]) * 10
+        velx = math.cos(bullet[0]) * 20
+        vely = math.sin(bullet[0]) * 20
         bullet[1] += velx
         bullet[2] += vely
         if bullet[1] < -64 or bullet[1] > 640 or bullet[2] < -64 or bullet[2] > 480:
