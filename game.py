@@ -8,6 +8,7 @@ from pygame.locals import *
 pygame.init()
 width, height = 640, 480
 screen=pygame.display.set_mode((width, height))
+pygame.display.toggle_fullscreen()
 keys = [False, False, False, False]
 playerpos=[100,100]
 acc=[0,0]
@@ -19,6 +20,7 @@ healthvalue=194
 gameRunning = True
 exitcode = 1
 accuracy = 100
+pygame.mixer.init()
 
 # 3 - Load images
 player = pygame.image.load("resources/images/dude.png")
@@ -31,6 +33,16 @@ healthbar = pygame.image.load("resources/images/healthbar.png")
 health = pygame.image.load("resources/images/health.png")
 gameover = pygame.image.load("resources/images/gameover.png")
 youwin = pygame.image.load("resources/images/youwin.png")
+# 3.1 - Load audio
+hit = pygame.mixer.Sound("resources/audio/explode.wav")
+enemy = pygame.mixer.Sound("resources/audio/enemy.wav")
+shoot = pygame.mixer.Sound("resources/audio/shoot.wav")
+hit.set_volume(0.05)
+enemy.set_volume(0.05)
+shoot.set_volume(0.05)
+pygame.mixer.music.load('resources/audio/moonlight.wav')
+pygame.mixer.music.play(-1, 0.0)
+pygame.mixer.music.set_volume(0.25)
 
 # 4 - keep looping through
 while gameRunning:
@@ -85,6 +97,7 @@ while gameRunning:
         if badrect.left < 64:
             healthvalue -= random.randint(5, 20)
             badguys.pop(index)
+            hit.play()
         # 6.3.2 - Check for collisions
         index1 = 0
         for bullet in arrows:
@@ -93,6 +106,7 @@ while gameRunning:
             bullrect.top = bullet[2]
             if badrect.colliderect(bullrect):
                 acc[0] += 1
+                enemy.play()
                 badguys.pop(index)
                 arrows.pop(index1)
             index1 += 1
@@ -140,6 +154,7 @@ while gameRunning:
             elif event.key == pygame.K_d:
                 keys[3] = False
         if event.type == pygame.MOUSEBUTTONDOWN:
+            shoot.play()
             position = pygame.mouse.get_pos()
             acc[1] += 1
             arrows.append(
