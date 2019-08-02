@@ -1,5 +1,5 @@
 #
-####### example-requirements.txt #######
+####### bunny game requirements #######
 #
 ###### Requirements with Version Specifiers ######
 pygame==1.9.6
